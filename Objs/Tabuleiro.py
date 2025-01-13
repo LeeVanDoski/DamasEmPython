@@ -41,8 +41,8 @@ class Tabuleiro():
                     self.tabuleiro[i].append(0)
 
     def mostraOndeIr(self,selec):
-        print("possiveis movs: ",selec.possiv_movs)
-        print('verif_movs: ',selec.verif_movs)
+        #print("possiveis movs: ",selec.possiv_movs)
+        #print('verif_movs: ',selec.verif_movs)
         for mov in selec.verif_movs:
             self.tabuleiro[mov.getPos()[0]][mov.getPos()[1]]=1
             pygame.draw.circle(self.tela,AMARELO,(mov.getPos()[1]*LADO_QUADRADO + LADO_QUADRADO/2,mov.getPos()[0]*LADO_QUADRADO + LADO_QUADRADO/2),
@@ -59,8 +59,8 @@ class Tabuleiro():
 
     def andar(self,peça,move):
         for mov in peça.verif_movs:
-            print(move)
-            print(mov.getPos())
+            #print(move)
+            #print(mov.getPos())
             if(mov.getPos()==move):
                 self.tabuleiro[move[0]][move[1]]=peça
                 self.tabuleiro[peça.posX][peça.posY]=0
@@ -90,7 +90,7 @@ class Tabuleiro():
                 i=0
             else:
                 i+=1
-            
+        print("max: ",max)
         print("Podem mover:", self.peçasQuePodemMover)
                 
     
