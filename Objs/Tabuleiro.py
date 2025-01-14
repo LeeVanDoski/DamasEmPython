@@ -80,19 +80,26 @@ class Tabuleiro():
                 self.peçasQuePodemMover.append(peça)
 
         i=0
-        max=self.peçasQuePodemMover[i].verif_movs[0].lenght
+        max=i
         while(i<len(self.peçasQuePodemMover)):
             if(self.peçasQuePodemMover[i].verif_movs[0].lenght<max):
                 self.peçasQuePodemMover.remove(self.peçasQuePodemMover[i])
-                i+=1
+                i=0
             elif(self.peçasQuePodemMover[i].verif_movs[0].lenght>max):
                 max=self.peçasQuePodemMover[i].verif_movs[0].lenght
                 i=0
             else:
                 i+=1
+            #print("it: ",i)
+            #print("len :",len(self.peçasQuePodemMover))
+        #print("")
+        '''
         print("max: ",max)
         print("Podem mover:", self.peçasQuePodemMover)
-                
+        for p in self.peçasQuePodemMover:
+            for i in p.verif_movs:
+                print("lenght: ",i.lenght)
+             '''   
     
     def descalcularMovimentoPeças(self,cor):
         if(cor==CINZA_UM):

@@ -13,7 +13,7 @@ class Peça():
             self.andar=-1
         self.posX=Pos[1]
         self.posY=Pos[0]
-        self.dama=False
+        self.dama=True
         self.possiv_movs=[]
         self.verif_movs=[]
         self.tabuleiro=TABULEIRO
@@ -46,6 +46,47 @@ class Peça():
 
     def mov_dama(self,posX,posY):
         i=1
+        c1=True
+        c2=True
+        c3=True
+        c4=True
+        while(c1 or c2 or c3 or c4):
+            if(self.noLimite(posX+i,posY+i) and c1):
+                if(self.tabuleiro[posX+i][posY+i]==0):
+                    self.calcular_mov(posX+i,posY+i,(posX+i,posY+i),None)
+                elif(self.tabuleiro[posX+i][posY+i]!=0):
+                    self.calcular_mov(posX,posY,(posX,posY),None)
+            else:
+                c1=False
+
+            if(self.noLimite(posX-i,posY+i) and c2):
+                if(self.tabuleiro[posX-i][posY+i]==0):
+                    self.calcular_mov(posX-i,posY+i,(posX-i,posY+i),None)
+                elif(self.tabuleiro[posX-i][posY+i]!=0):
+                     self.calcular_mov(posX,posY,(posX,posY),None)
+            else:
+                c2=False
+            
+            if(self.noLimite(posX+i,posY-i) and c3):
+                if(self.tabuleiro[posX+i][posY-i]==0):
+                    self.calcular_mov(posX+i,posY-i,(posX+i,posY-i),None)
+                elif(self.tabuleiro[posX+i][posY-i]!=0):
+                    self.calcular_mov(posX,posY,(posX,posY),None)
+            else:
+                c3=False
+            
+            if(self.noLimite(posX-i,posY-i) and c4):
+                if(self.tabuleiro[posX-i][posY-i]==0):
+                    self.calcular_mov(posX-i,posY-i,(posX-i,posY-i),None)
+                elif(self.tabuleiro[posX-i][posY-i]!=0):
+                    self.calcular_mov(posX,posY,(posX,posY),None)
+            else:
+                c4=False
+            i+=1
+            
+            
+        '''
+        i=1
         while(self.noLimite(posX+i,posY+i)):
             if(self.tabuleiro[posX+i][posY+i]!=0  and self.ehInimigo (self.tabuleiro[posX+i][posY+i])):
                 self.calcular_mov(posX+i-1,posY+i-1,(posX+i-1,posY+i-1),None)
@@ -59,7 +100,7 @@ class Peça():
         i=1
         while(self.noLimite(posX-i,posY+i)):
             if(self.tabuleiro[posX-i][posY+i]!=0 and self.ehInimigo(self.tabuleiro[posX-i][posY+i])):
-                self.calcular_mov(posX-i-1,posY+i-1,(posX-i-1,posY+i-1),None)
+                self.calcular_mov(posX-i-1,posY+i-1,(posX-i+1,posY+i-1),None)
                 break
             elif(self.tabuleiro[posX-i][posY+i]==0 ):
                 new_move=Move((posX-i,posY+i),(-1,-1),None)
@@ -70,7 +111,7 @@ class Peça():
         i=1
         while(self.noLimite(posX+i,posY-i)):
             if(self.tabuleiro[posX+i][posY-i]!=0 and self.ehInimigo(self.tabuleiro[posX+i][posY-i])):
-                self.calcular_mov(posX+i-1,posY-i-1,(posX+i-1,posY-i-1),None)
+                self.calcular_mov(posX+i-1,posY-i-1,(posX+i-1,posY-i+1),None)
                 break
             elif(self.tabuleiro[posX+i][posY-i]==0 ):
                 new_move=Move((posX+i,posY-i),(-1,-1),None)
@@ -81,7 +122,7 @@ class Peça():
         i=1
         while(self.noLimite(posX-i,posY-i)):
             if(self.tabuleiro[posX-i][posY-i]!=0 and self.ehInimigo (self.tabuleiro[posX-i][posY-i])):
-                self.calcular_mov(posX-i-1,posY-i-1,(posX-i-1,posY-i-1),None)
+                self.calcular_mov(posX-i-1,posY-i-1,(posX-i+1,posY-i+1),None)
                 break
             elif(self.tabuleiro[posX-i][posY-i]==0):
                 new_move=Move((posX-i,posY-i),(-1,-1),None)
@@ -90,7 +131,7 @@ class Peça():
                 break
             i+=1
         i=1
-
+'''
 
     def calcular_mov(self,posX,posY,pos_ant,move_ant):
 
@@ -136,7 +177,7 @@ class Peça():
                     self.possiv_movs.append(new_move)
                     self.calcular_mov(posX+2,posY-2,(posX,posY),new_move)
 
-            if(len(self.possiv_movs)==0):
+            if(len(self.possiv_movs)==0 and self.dama==False):
                 if(self.noLimite(posX+self.andar,posY+1) and self.tabuleiro[posX+self.andar][posY+1]==0):
                     new_move=Move((posX+self.andar,posY+1),(-1,-1),None)
                     self.verif_movs.append(new_move)
@@ -144,6 +185,9 @@ class Peça():
                 if(self.noLimite(posX+self.andar,posY-1) and self.tabuleiro[posX+self.andar][posY-1]==0):
                     new_move=Move((posX+self.andar,posY-1),(-1,-1),None)
                     self.verif_movs.append(new_move)
+            elif(len(self.possiv_movs)==0 and self.dama==True and posX!=self.posX and posY!=self.posY):
+                new_move=Move((posX,posY),(-1,-1),None)
+                self.verif_movs.append(new_move)
             
             return
         else:
