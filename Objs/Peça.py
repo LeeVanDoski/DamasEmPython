@@ -4,7 +4,7 @@ from .Move import Move
 
 class Peça():
     ESPAÇAMENTO=7
-    def __init__(self,COR,Pos,TELA,TABULEIRO):
+    def __init__(self,COR,Pos,TELA,TABULEIRO,INIMIGOS):
         self.tela=TELA
         self.cor=COR
         if self.cor==CINZA_UM:
@@ -13,10 +13,11 @@ class Peça():
             self.andar=-1
         self.posX=Pos[1]
         self.posY=Pos[0]
-        self.dama=True
+        self.dama=False
         self.possiv_movs=[]
         self.verif_movs=[]
         self.tabuleiro=TABULEIRO
+        self.inimigos=INIMIGOS
 
     def desenha_peça(self):
         pygame.draw.circle(self.tela,self.cor,(self.posY*LADO_QUADRADO + LADO_QUADRADO/2,self.posX*LADO_QUADRADO + LADO_QUADRADO/2),
@@ -222,6 +223,9 @@ class Peça():
             coord=move.getPeça()
             peça=self.tabuleiro[coord[0]][coord[1]]
             self.tabuleiro[coord[0]][coord[1]]=0
+            print("Peça deletada: ",peça)
+            if(peça!=0):
+                self.inimigos.remove(peça)
             del peça
             move=move.getAnt()
 

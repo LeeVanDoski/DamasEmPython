@@ -26,12 +26,12 @@ class Tabuleiro():
             for j in range(COLUNAS):
                 if j % 2 ==((i+1)%2):
                     if i<3:
-                        peça=Peça(CINZA_UM,(j,i),self.tela,self.tabuleiro)
+                        peça=Peça(CINZA_UM,(j,i),self.tela,self.tabuleiro,self.peçasOutro)
                         self.peçasCinzas.append(peça)
                         self.tabuleiro[i].append(peça)  #append coloca o termo na linha, na coluna do lado  
                         self.tabuleiro[i][j].desenha_peça()
                     elif i>=5:
-                        peça=Peça(CINZA_DOIS,(j,i),self.tela,self.tabuleiro)
+                        peça=Peça(CINZA_DOIS,(j,i),self.tela,self.tabuleiro,self.peçasCinzas)
                         self.peçasOutro.append(peça)
                         self.tabuleiro[i].append(peça)
                         self.tabuleiro[i][j].desenha_peça()
@@ -93,13 +93,8 @@ class Tabuleiro():
             #print("it: ",i)
             #print("len :",len(self.peçasQuePodemMover))
         #print("")
-        '''
-        print("max: ",max)
-        print("Podem mover:", self.peçasQuePodemMover)
-        for p in self.peçasQuePodemMover:
-            for i in p.verif_movs:
-                print("lenght: ",i.lenght)
-             '''   
+        print("Peças que podem mover: ",self.peçasQuePodemMover)
+
     
     def descalcularMovimentoPeças(self,cor):
         if(cor==CINZA_UM):
